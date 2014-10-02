@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!-- Конфиг для slf4j и logback. После сборки проекта должен лежать в WEB-INF/classes -->
+
+    <!-- аппендер для вывода лога в консоль -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root используется, если при создании объекта логгера ему не передается имя какого-нибудь логгера -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

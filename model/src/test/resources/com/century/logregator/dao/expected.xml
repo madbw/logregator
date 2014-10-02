@@ -1,0 +1,4 @@
+<dataset>
+    <jar_info id="1" file_name="test.jar" mvn_tag_id="[mvn_id]"/>
+    <mvn_tag ID="[mvn_id]" group_id="apa" artifact_id="che" version="1.4-snapshot"/>
+</dataset>

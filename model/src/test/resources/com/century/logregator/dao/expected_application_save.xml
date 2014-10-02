@@ -1,0 +1,7 @@
+<dataset>
+    <mvn_tag id="${mvn_id}" group_id="century" artifact_id="test" version="1.0"/>
+    <mvn_tag id="${mvn_id+1}" group_id="commons-logging" artifact_id="commons-logging" version="3.2.1"/>
+    <jar_info id="${jar_info_id}" file_name="century.test-1.0.jar" tag="${mvn_id}"/>
+    <jar_info id="${jar_info_id+1}" file_name="test.another-2.0.jar"/>
+    <jar_info id="${jar_info_id+2}" file_name="commons-logging-3.2.1.jar" tag="${mvn_id+1}"/>
+</dataset>
