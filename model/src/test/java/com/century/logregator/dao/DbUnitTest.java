@@ -63,11 +63,13 @@ public class DbUnitTest {
 
 
     private static IDataSet readDataSet() throws Exception {
-        return new FlatXmlDataSetBuilder().build(new File("model/src/test/resources/com/century/logregator/dao/dataset.xml"));
+        InputStream dataset = DbUnitTest.class.getResourceAsStream("dataset.xml");
+        return new FlatXmlDataSetBuilder().build(dataset);
     }
 
     protected static IDataSet readDataSet(String fileName) throws Exception {
-        return new FlatXmlDataSetBuilder().build(new File("model/src/test/resources/com/century/logregator/dao/" + fileName));
+        InputStream dataset = DbUnitTest.class.getResourceAsStream(fileName);
+        return new FlatXmlDataSetBuilder().build(dataset);
     }
 
     protected  IDataSet fromStream(String fileName) throws Exception{
