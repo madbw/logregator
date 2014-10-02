@@ -3,6 +3,7 @@ package com.century.logregator.dao;
 import com.century.logregator.DbReplacement;
 import com.century.logregator.DbTest;
 import com.century.logregator.ElInputStreamBuilder;
+import junit.framework.AssertionFailedError;
 import junit.framework.ComparisonFailure;
 import lombok.extern.slf4j.Slf4j;
 import org.dbunit.dataset.IDataSet;
@@ -43,11 +44,11 @@ public class DbUnitRunner extends SpringJUnit4ClassRunner {
         if(dbTest != null){
             try {
                 testByXml();
-            } catch (ComparisonFailure e){
+            } catch (AssertionFailedError e){
                 notifier.fireTestFailure(new Failure(getDescription() , e));
             }
             catch (Exception e) {
-                notifier.fireTestFailure(new Failure(getDescription(), e));
+                notifier.fireTestFailure(new Failure(getDescription(), new AssertionError(e)));
             }
         } else {
             log.debug("DbUnit test missing dbTest annotations");
@@ -68,10 +69,9 @@ public class DbUnitRunner extends SpringJUnit4ClassRunner {
             }
             try {
                 for (String assertTable : assertTables) {
-
                     Reader reader = new ElInputStreamBuilder().spel(expectedDataSet, reps);
                     IDataSet expected = new FlatXmlDataSetBuilder().build(reader);
-                    IDataSet actual = test.getActual();
+                    IDataSet actual = test.getActual(assertTable);
                     test.assertTablesEqual(assertTable, expected, actual);
                 }
             } catch (Exception e) {

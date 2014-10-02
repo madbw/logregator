@@ -1,5 +1,6 @@
 package com.century.logregator.dao;
 
+import com.century.logregator.DbReplacement;
 import com.century.logregator.DbTest;
 import com.century.logregator.TestConfig;
 import com.century.logregator.model.JarInfo;
@@ -21,6 +22,8 @@ public class JarInfoDaoTest extends DbUnitTest {
         MvnTag mvnTag = new MvnTag("apa", "che", "1.4-snapshot");
         JarInfo jarInfo = new JarInfo("apache-commons-1.3.0.jar", mvnTag);
         jarInfoDao.saveJarInfoDao(jarInfo);
+        DbReplacement.bind("mvn_id", jarInfo.getMvnTagId());
+        DbReplacement.bind("jar_info_id", jarInfo.getId());
     }
 
 }

@@ -1,5 +1,7 @@
 package com.century.logregator;
 
+import junit.framework.AssertionFailedError;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class DbReplacement {
 
     public final static Object getBinded(String key){
         if(! replacements.containsKey(key)){
-            throw new RuntimeException("parameter {" + key + "} is not bound for test");
+            throw new AssertionFailedError("parameter {" + key + "} is not bound for test");
         }
         return replacements.get(key);
     }
