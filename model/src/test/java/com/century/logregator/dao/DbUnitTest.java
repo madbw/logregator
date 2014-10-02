@@ -5,10 +5,7 @@ import org.dbunit.Assertion;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.ReplacementDataSet;
-import org.dbunit.dataset.ReplacementTable;
+import org.dbunit.dataset.*;
 import org.dbunit.dataset.datatype.DefaultDataTypeFactory;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -79,7 +76,7 @@ public class DbUnitTest {
         return readDataSet("expected.xml");
     }
 
-    protected IDataSet getActual() throws Exception {
+    public IDataSet getActual() throws Exception {
         return iDatabaseTester.getConnection().createDataSet(new String[]{"mvn_tag"});
     }
 
@@ -89,7 +86,7 @@ public class DbUnitTest {
         Assertion.assertEquals(expected.getTable(tableName), actual.getTable(tableName));
     }
 
-    protected void assertTablesEqualWithReplacement(String tableName, Map<String, Object> reps) throws Exception{
+    public void assertTablesEqualWithReplacement(String tableName, Map<String, Object> reps) throws Exception{
         IDataSet actual = getActual();
         ReplacementTable expected = new ReplacementTable(getExpected().getTable(tableName));
         for (Map.Entry<String, Object> entry : reps.entrySet()) {
@@ -98,13 +95,9 @@ public class DbUnitTest {
         Assertion.assertEquals(expected, actual.getTable(tableName));
     }
 
-
-
-    public  void a(){
-        ExpressionParser expressionParser = new SpelExpressionParser();
-//        expressionParser.parseExpression();
-
-        new FlatXmlDataSetBuilder();
+    protected void assertTablesEqual(String tableName, IDataSet expected, IDataSet actual) throws Exception{
+        ITable expectedTable = new SortedTable(expected.getTable(tableName));
+        ITable actualTable = new SortedTable(actual.getTable(tableName));
+        Assertion.assertEquals(expectedTable, actualTable);
     }
-
 }

@@ -1,5 +1,7 @@
 package com.century.logregator.dao;
 
+import com.century.logregator.DbReplacement;
+import com.century.logregator.DbTest;
 import com.century.logregator.RepBuilder;
 import com.century.logregator.TestConfig;
 import com.century.logregator.model.MvnTag;
@@ -17,10 +19,11 @@ public class MvnTagDaoTest extends DbUnitTest {
     private MvnTagDao mvnTagDao;
 
     @Test
+    @DbTest(expected = "dao/expected.xml", assertTables = {"mvn_tag"}, replacemnt = "mvn_id")
     public void testSave() throws Exception {
         MvnTag mvnTag = new MvnTag("apa", "che", "1.4-snapshot");
         mvnTagDao.save(mvnTag);
-        assertTablesEqualWithReplacement("mvn_tag", RepBuilder.addS("[mvn_id]", mvnTag.getId()).build());
+        DbReplacement.bind("mvn_id", mvnTag.getId());
     }
 
 }

@@ -10,7 +10,7 @@ public class JarInfoDao {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private MvnTagDao mvnTagDao;
-    String INSERT_JAR_INFO_SQL = "INSERT INTO jar_info VALUES(file_name, mvn_tag_id, application_id) VALUES (?, ?, ?) RETURNING id";
+    String INSERT_JAR_INFO_SQL = "INSERT INTO jar_info(file_name, mvn_tag_id, application_id) VALUES (?, ?, ?) RETURNING id";
 
     public void saveJarInfoDao(JarInfo jarInfo){
         if(jarInfo.getMvnTag() != null){

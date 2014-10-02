@@ -1,5 +1,6 @@
 package com.century.logregator;
 
+import com.century.logregator.dao.ApplicationDao;
 import com.century.logregator.dao.JarInfoDao;
 import com.century.logregator.dao.MvnTagDao;
 import liquibase.Liquibase;
@@ -66,7 +67,7 @@ public class TestConfig {
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("dbc:postgresql://localhost:5432/test");
+        dataSource.setUrl("dbc:postgresql://localhost:5432/logregator_test");
         dataSource.setUsername("postgres");
         dataSource.setPassword("111111");
         Collection<String> sqls = new ArrayList<String>();
@@ -88,5 +89,10 @@ public class TestConfig {
     @Bean
     public MvnTagDao mvnTagDao(){
         return new MvnTagDao();
+    }
+
+    @Bean
+    public ApplicationDao applicationDao() {
+        return new ApplicationDao();
     }
 }

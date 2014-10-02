@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(DbUnitRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
 public class ApplicationDaoTest extends DbUnitTest {
     @Autowired
@@ -47,5 +47,6 @@ public class ApplicationDaoTest extends DbUnitTest {
 
         applicationDao.saveApplication(application);
     }
+
 
 }
