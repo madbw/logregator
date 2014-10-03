@@ -1,5 +1,6 @@
 package com.century.logregator.dao;
 
+import com.century.logregator.DbReplacement;
 import com.century.logregator.DbTest;
 import com.century.logregator.TestConfig;
 import com.century.logregator.model.Application;
@@ -23,12 +24,13 @@ public class ApplicationDaoTest extends DbUnitTest {
     @Test
     @DbTest(expected = "expected_application_save.xml", assertTables = {"mvn_tag", "jar_info", "application",
     "application_properties", "application_environment"},
-    replacemnt = {"mvn_id","jar_info_id", "app_id","prop_id","env_id"})
+    replacemnt = {"mvn_id","jar_info_id", "app_id","prop_id","env_id", "now"})
     public void testSaveAppInfo() throws Exception{
         Application application = new Application();
         application.setHostIp("172.172.1.102");
-        application.setHostName("test_server");
-        application.setStartDate(DateUtils.parseDate("25-12-2014", "dd-MM-yyyy"));
+        application.setHostName("www.localhost.com");
+        Date now = new Date();
+        application.setStartDate(now);
 
         Properties properties = new Properties();
         properties.put("s1", "value1");
@@ -50,6 +52,12 @@ public class ApplicationDaoTest extends DbUnitTest {
         application.addJarInfo(new JarInfo("commons-logging-3.2.1.jar", tag2));
 
         applicationDao.saveApplication(application);
+        DbReplacement.bind("mvn_id", 1);
+        DbReplacement.bind("jar_info_id", 1);
+        DbReplacement.bind("app_id", 1);
+        DbReplacement.bind("prop_id", 1);
+        DbReplacement.bind("env_id", 1);
+        DbReplacement.bind("now", now);
     }
 
 

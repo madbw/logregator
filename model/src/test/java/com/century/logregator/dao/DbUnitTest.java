@@ -43,6 +43,15 @@ public class DbUnitTest {
     public void initDb() throws Exception {
         IDataSet iDataSet = readDataSet();
         cleanlyInsertDataSet(iDataSet);
+        resetSequences();
+    }
+
+    private void resetSequences() {
+        jdbcTemplate.update("alter sequence application_id_seq restart");
+        jdbcTemplate.update("alter sequence application_environment_id_seq restart");
+        jdbcTemplate.update("alter sequence application_properites_id_seq restart");
+        jdbcTemplate.update("alter sequence jar_info_id_seq restart");
+        jdbcTemplate.update("alter sequence mvn_tag_id_seq restart");
     }
 
     private void cleanlyInsertDataSet(IDataSet dataSet) throws Exception {

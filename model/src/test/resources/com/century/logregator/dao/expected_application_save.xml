@@ -1,10 +1,11 @@
 <dataset>
-    <mvn_tag id="${mvn_id}" group_id="century" artifact_id="test" version="1.0"/>
-    <mvn_tag id="${mvn_id+1}" group_id="commons-logging" artifact_id="commons-logging" version="3.2.1"/>
-    <jar_info id="${jar_info_id}" file_name="century.test-1.0.jar" tag="${mvn_id}"/>
+    <mvn_tag id="${mvn_id}" group_id="logregator" artifact_id="model" version="0.0.1"/>
+    <mvn_tag id="${mvn_id+1}" group_id="century" artifact_id="test" version="1.0"/>
+    <mvn_tag id="${mvn_id+2}" group_id="commons-logging" artifact_id="commons-logging" version="3.2.1"/>
+    <jar_info id="${jar_info_id}" file_name="century.test-1.0.jar" tag="${mvn_id+1}"/>
     <jar_info id="${jar_info_id+1}" file_name="test.another-2.0.jar"/>
-    <jar_info id="${jar_info_id+2}" file_name="commons-logging-3.2.1.jar" tag="${mvn_id+1}"/>
-    <application id="${app_id}"/>
+    <jar_info id="${jar_info_id+2}" file_name="commons-logging-3.2.1.jar" tag="${mvn_id+2}"/>
+    <application id="${app_id}" mvn_tag_id="${mvn_id}" start_date="${now}" host_name="www.localhost.com" host_ip="172.172.1.102"/>
     <application_properties id="${prop_id}" key="s1" value="value1" application_id="${app_id}"/>
     <application_properties id="${prop_id+1}" key="s2" value="value2" application_id="${app_id}"/>
     <application_properties id="${prop_id+2}" key="s3" value="value3" application_id="${app_id}"/>

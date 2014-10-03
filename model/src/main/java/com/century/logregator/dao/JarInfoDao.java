@@ -16,7 +16,7 @@ public class JarInfoDao {
         if(jarInfo.getMvnTag() != null){
             mvnTagDao.save(jarInfo.getMvnTag());
         }
-        Long id = jdbcTemplate.queryForObject(INSERT_JAR_INFO_SQL, Long.class, jarInfo.getFileName(), jarInfo.getMvnTagId(), jarInfo.getApplicationId());
+        Integer id = jdbcTemplate.queryForObject(INSERT_JAR_INFO_SQL, Integer.class, jarInfo.getFileName(), jarInfo.getMvnTagId(), jarInfo.getApplicationId());
         jarInfo.setId(id);
     }
 
