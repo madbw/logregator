@@ -1,5 +1,6 @@
 package com.century.logregator.dao;
 
+import com.century.logregator.DbTest;
 import com.century.logregator.TestConfig;
 import com.century.logregator.model.Application;
 import com.century.logregator.model.JarInfo;
@@ -20,6 +21,9 @@ public class ApplicationDaoTest extends DbUnitTest {
     private ApplicationDao applicationDao;
 
     @Test
+    @DbTest(expected = "expected_application_save.xml", assertTables = {"mvn_tag", "jar_info", "application",
+    "application_properties", "application_environment"},
+    replacemnt = {"mvn_id","jar_info_id", "app_id","prop_id","env_id"})
     public void testSaveAppInfo() throws Exception{
         Application application = new Application();
         application.setHostIp("172.172.1.102");
@@ -43,7 +47,7 @@ public class ApplicationDaoTest extends DbUnitTest {
         application.addJarInfo(new JarInfo("century.test-1.0.jar", tag1));
         application.addJarInfo(new JarInfo("test.another-2.0.jar"));
         MvnTag tag2 = new MvnTag("commons-logging", "commons-logging", "3.2.1");
-        application.addJarInfo(new JarInfo("commons-logging-3.2.1.jar",tag2));
+        application.addJarInfo(new JarInfo("commons-logging-3.2.1.jar", tag2));
 
         applicationDao.saveApplication(application);
     }
