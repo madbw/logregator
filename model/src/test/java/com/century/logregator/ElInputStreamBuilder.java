@@ -23,6 +23,9 @@ import java.util.Map;
 public class ElInputStreamBuilder {
     public Reader spel(String filename,  Map<String, Object> reps) throws Exception {
         InputStream inputStream = getClass().getResourceAsStream(filename);
+        if(inputStream == null){
+            throw new IllegalArgumentException("file " + filename + " not found");
+        }
         String temp = StreamUtils.copyToString(inputStream, Charset.forName("utf-8"));
         ExpressionFactory factory = new ExpressionFactoryImpl();
         SimpleContext context = new SimpleContext();

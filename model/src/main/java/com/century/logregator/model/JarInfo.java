@@ -33,7 +33,7 @@ public class JarInfo {
     /**
      * Application, this jar file belongs to
      */
-    @Getter
+    @Getter @Setter
     Integer applicationId;
 
     public JarInfo(String fileName, MvnTag mvnTag) {

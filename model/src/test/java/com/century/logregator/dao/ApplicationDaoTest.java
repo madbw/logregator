@@ -22,7 +22,7 @@ public class ApplicationDaoTest extends DbUnitTest {
     private ApplicationDao applicationDao;
 
     @Test
-    @DbTest(expected = "expected_application_save.xml", assertTables = {"mvn_tag", "jar_info", "application",
+    @DbTest(expected = "dao/expected.app_save.xml", assertTables = {"mvn_tag", "jar_info", "application",
     "application_properties", "application_environment"},
     replacemnt = {"mvn_id","jar_info_id", "app_id","prop_id","env_id", "now"})
     public void testSaveAppInfo() throws Exception{
@@ -50,6 +50,8 @@ public class ApplicationDaoTest extends DbUnitTest {
         application.addJarInfo(new JarInfo("test.another-2.0.jar"));
         MvnTag tag2 = new MvnTag("commons-logging", "commons-logging", "3.2.1");
         application.addJarInfo(new JarInfo("commons-logging-3.2.1.jar", tag2));
+
+        application.setAppTag(new MvnTag("logregator", "model", "0.0.1"));
 
         applicationDao.saveApplication(application);
         DbReplacement.bind("mvn_id", 1);
