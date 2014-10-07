@@ -46,9 +46,11 @@ public class DbUnitRunner extends SpringJUnit4ClassRunner {
                 testByXml();
             } catch (AssertionFailedError e){
                 notifier.fireTestFailure(new Failure(getDescription() , e));
+            } catch (AssertionError e){
+                notifier.fireTestFailure(new Failure(getDescription(), e));
             }
-            catch (Exception e) {
-                notifier.fireTestFailure(new Failure(getDescription(), new AssertionError(e)));
+            catch (Throwable e) {
+                notifier.fireTestFailure(new Failure(getDescription(), e));
             }
         } else {
             log.debug("DbUnit test missing dbTest annotations");
