@@ -30,12 +30,12 @@ import java.util.Collection;
 public class TestConfig {
     @PostConstruct
     public void initLiquibase() throws Exception{
-        jdbcTemplate().update("DROP SCHEMA logregator_test cascade");
-        jdbcTemplate().update("CREATE SCHEMA logregator_test");
+        jdbcTemplate().update("DROP SCHEMA logregator cascade");
+        jdbcTemplate().update("CREATE SCHEMA logregator");
         Connection c = jdbcTemplate().getDataSource().getConnection();
         try {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-            database.setDefaultSchemaName("logregator_test");
+            database.setDefaultSchemaName("logregator");
             Liquibase liquibase = new Liquibase("src/test/resources/liquibase-test.properties", new FileSystemResourceAccessor(),database);
             liquibase.forceReleaseLocks();
             liquibase.dropAll();
@@ -53,7 +53,7 @@ public class TestConfig {
     SpringLiquibase springLiquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource());
-        liquibase.setDefaultSchema("logregator_test");
+        liquibase.setDefaultSchema("logregator");
         liquibase.setChangeLog("classpath:/liquibase/db.changelog-master.xml");
         return liquibase;
     }
@@ -71,14 +71,14 @@ public class TestConfig {
         dataSource.setUsername("postgres");
         dataSource.setPassword("111111");
         Collection<String> sqls = new ArrayList<String>();
-        sqls.add("set search_path TO logregator_test;");
+        sqls.add("set search_path TO logregator;");
         dataSource.setConnectionInitSqls(sqls);
         return dataSource;
     }
 
     @Bean
     public IDatabaseTester iDatabaseTester(){
-        return new DataSourceDatabaseTester(dataSource(), "logregator_test");
+        return new DataSourceDatabaseTester(dataSource(), "logregator");
     }
 
     @Bean

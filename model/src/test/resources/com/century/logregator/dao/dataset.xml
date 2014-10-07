@@ -1,5 +1,8 @@
 <dataset>
+    <mvn_tag/>
     <jar_info/>
-    <mvn_tag />
+    <application_properties/>
+    <application_environment/>
+    <application/>
 
 </dataset>

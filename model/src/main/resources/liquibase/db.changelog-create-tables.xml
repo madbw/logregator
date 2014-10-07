@@ -76,9 +76,7 @@
                              primaryKey="true"
                              unique="true"/>
             </column>
-            <column name="mvn_tag_id" type="int" remarks="mvn information about application">
-                <constraints foreignKeyName="mvn_tag_id_fk" references="mvn_tag(id)"/>
-            </column>
+            <column name="mvn_tag_id" type="int" remarks="mvn information about application"/>
             <column name="start_date" type="timestamp" remarks="application start time"/>
             <column name="host_name" type="varchar" remarks="host where application works"/>
             <column name="host_ip" type="varchar" remarks="ip of host"/>
@@ -99,9 +97,7 @@
             <column name="value" type="varchar" remarks="value">
                 <constraints nullable="true"/>
             </column>
-            <column name="application_id" type="int" remarks="application, this properties belongs to. Foreign key of table application">
-                <constraints references="application(id)" foreignKeyName="application_id_fk"/>
-            </column>
+            <column name="application_id" type="int" remarks="application, this properties belongs to. Foreign key of table application"/>
         </createTable>
     </changeSet>
 
@@ -119,9 +115,7 @@
             <column name="value" type="varchar" remarks="value">
                 <constraints nullable="true"/>
             </column>
-            <column name="application_id" type="int" remarks="Application, this environment belongs to.Foreign key of table application">
-                <constraints references="application(id)" foreignKeyName="application_id_fk"/>
-            </column>
+            <column name="application_id" type="int" remarks="Application, this environment belongs to.Foreign key of table application"/>
         </createTable>
     </changeSet>
 
@@ -131,12 +125,8 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="file_name" type="varchar" remarks="file name of jar dependency"/>
-            <column name="mvn_tag_id" type="integer" remarks="maven info, optional. Foreing key mvn_tag(id)">
-                <constraints references="mvn_tag(id)" foreignKeyName="mvn_tag_id_fk"/>
-            </column>
-            <column name="application_id" type="integer" remarks="application, this jar belongs to">
-                <!--<constraints references="application(id)" foreignKeyName="application_id_fk"/>-->
-            </column>
+            <column name="mvn_tag_id" type="integer" remarks="maven info, optional. Foreing key mvn_tag(id)"/>
+            <column name="application_id" type="integer" remarks="application, this jar belongs to"/>
         </createTable>
     </changeSet>
 

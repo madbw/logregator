@@ -8,6 +8,7 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -49,7 +50,7 @@ public class DbUnitTest {
     private void resetSequences() {
         jdbcTemplate.update("alter sequence application_id_seq restart");
         jdbcTemplate.update("alter sequence application_environment_id_seq restart");
-        jdbcTemplate.update("alter sequence application_properites_id_seq restart");
+        jdbcTemplate.update("alter sequence application_properties_id_seq restart");
         jdbcTemplate.update("alter sequence jar_info_id_seq restart");
         jdbcTemplate.update("alter sequence mvn_tag_id_seq restart");
     }
@@ -59,25 +60,26 @@ public class DbUnitTest {
             databaseConnection = new DatabaseConnection(jdbcTemplate.getDataSource().getConnection());
             databaseConnection.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());
         }
-        DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+        DatabaseOperation.TRUNCATE_TABLE.execute(databaseConnection, dataSet);
     }
 
 
     private static IDataSet readDataSet() throws Exception {
-        return new FlatXmlDataSetBuilder().build(new File("model/src/test/resources/com/century/logregator/dao/dataset.xml"));
+        InputStream inputStream = DbUnitTest.class.getResourceAsStream("dataset.xml");
+        return new FlatXmlDataSetBuilder().build(inputStream);
     }
 
     protected static IDataSet readDataSet(String fileName) throws Exception {
-        return new FlatXmlDataSetBuilder().build(new File("model/src/test/resources/com/century/logregator/dao/" + fileName));
+        return new FlatXmlDataSetBuilder().build(new File("src/test/resources/com/century/logregator/dao/" + fileName));
+    }
+
+    protected static IDataSet readDataSet(InputStream inputStream) throws Exception{
+        return new FlatXmlDataSetBuilder().build(inputStream);
     }
 
     protected IDataSet fromStream(String fileName) throws Exception {
         InputStream stream = getClass().getResourceAsStream(fileName);
         return new FlatXmlDataSetBuilder().build(stream);
-    }
-
-    protected IDataSet getExpected() throws Exception {
-        return readDataSet("expected.xml");
     }
 
     public IDataSet getActual(String table) throws Exception {

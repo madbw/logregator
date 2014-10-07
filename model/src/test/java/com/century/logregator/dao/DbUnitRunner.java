@@ -64,7 +64,7 @@ public class DbUnitRunner extends SpringJUnit4ClassRunner {
             Map<String, Object> reps = new HashMap<>();
             for (String key : replacemnt) {
                 Object value = DbReplacement.getBinded(key);
-                log.info("binding {}={}", key, value);
+                log.info("binding {}={} in dataset={}", key, value, expectedDataSet);
                 reps.put(key, value);
             }
             try {
