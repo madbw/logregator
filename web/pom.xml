@@ -61,6 +61,35 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <finalName>logregator-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <webResources>
+                        <!-- config for slf4j and logback -->
+                        <resource>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <directory>${basedir}/src/main/resources/</directory>
+                            <includes>
+                                <include>logback.xml</include>
+                            </includes>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

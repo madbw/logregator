@@ -2,6 +2,7 @@ package com.century.logregator.dao;
 
 import com.century.logregator.model.Application;
 import com.century.logregator.model.JarInfo;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -16,12 +17,15 @@ public class ApplicationDao {
     public static final String INSERT_APP = "INSERT INTO application(mvn_tag_id, start_date, host_name, host_ip) values(?,?,?,?) RETURNING id";
 
     @Autowired
+    @Setter
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
+    @Setter
     private MvnTagDao mvnTagDao;
 
     @Autowired
+    @Setter
     private JarInfoDao jarInfoDao;
 
     /**
@@ -40,6 +44,9 @@ public class ApplicationDao {
         saveProps(application);
     }
 
+    /**
+     * save properties of application
+     */
     private void saveProps(Application application) {
         Map<Object, Object> props = new TreeMap<>(application.getSystemProps());
         for (Map.Entry<Object, Object> entry : props.entrySet()) {
@@ -47,6 +54,9 @@ public class ApplicationDao {
         }
     }
 
+    /**
+     * save environment of application
+     */
     private void saveJars(Application application) {
         for (JarInfo jarInfo : application.getTags()) {
             jarInfo.setApplicationId(application.getId());
@@ -60,21 +70,4 @@ public class ApplicationDao {
         }
     }
 
-    /**
-     * save environment of application
-     */
-    private void saveEnvironmet(Map<String, String> env, Integer applicationId){
-        for (Map.Entry<String, String> entry : env.entrySet()) {
-            jdbcTemplate.update(INSERT_ENV, entry.getKey(), entry.getValue(), applicationId);
-        }
-    }
-
-    /**
-     * save properties of application
-     */
-    private void saveProps(Properties props, Integer applicationId){
-        for (Map.Entry<Object, Object> entry : props.entrySet()) {
-            jdbcTemplate.update(INSERT_PROPS, entry.getKey(), entry.getValue(), applicationId);
-        }
-    }
 }

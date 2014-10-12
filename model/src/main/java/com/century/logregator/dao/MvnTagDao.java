@@ -1,6 +1,7 @@
 package com.century.logregator.dao;
 
 import com.century.logregator.model.MvnTag;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -9,6 +10,7 @@ public class MvnTagDao {
             " VALUES(?,?,?) returning id";
 
     @Autowired
+    @Setter
     private JdbcTemplate jdbcTemplate;
 
 

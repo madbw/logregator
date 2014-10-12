@@ -8,6 +8,8 @@ import ch.qos.logback.core.LogbackException;
 import ch.qos.logback.core.filter.Filter;
 import ch.qos.logback.core.spi.FilterReply;
 import ch.qos.logback.core.status.Status;
+import com.century.logregator.dao.ApplicationDao;
+import com.century.logregator.model.Application;
 import com.century.logregator.model.JarInfo;
 import com.century.logregator.model.MvnTag;
 import com.century.logregator.tag_extractor.JarInfoTagExtractor;
@@ -17,6 +19,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.net.URL;
@@ -29,6 +32,11 @@ public class LogregatorAppender extends AppenderBase {
     private final static String filePrefix = "file:";
     @Getter @Setter
     private String projectName = "undefind";
+
+    @Autowired
+    @Setter
+    //todo getters and setters for jdbc properties, create dao in start()
+    private ApplicationDao applicationDao;
 
     @Override
     protected void append(Object eventObject) {
@@ -46,22 +54,47 @@ public class LogregatorAppender extends AppenderBase {
     @Override
     public void start() {
         super.start();
+
+        Map<String, String> env = null;
+        Properties properties = null;
+        Collection<JarInfo> dependencies = null;
+        MvnTag appInfo = null;
+
         try {
-            Map<String, String> env = System.getenv();
+            env = System.getenv();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         try {
-            Properties properties = System.getProperties();
+            properties = System.getProperties();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         try {
-            Collection<JarInfo> dependencies = getDependecies();
+            dependencies = getDependecies();
             System.out.println("Project " + projectName + " dependencies: \n" + StringUtils.join(dependencies,"\n"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+        try {
+            appInfo = getAppInfo();
+        } catch (Exception e){
+            log.error(e.getMessage(), e);
+        }
+
+        Application app = new Application();
+        app.setAppTag(appInfo);
+        app.setEnvironment(env);
+        app.setSystemProps(properties);
+        for (JarInfo dependency : dependencies) {
+            app.addJarInfo(dependency);
+        }
+
+        applicationDao.saveApplication(app);
+    }
+
+    private MvnTag getAppInfo() {
+        throw new RuntimeException("TODO");
     }
 
     private Collection<JarInfo> getDependecies() {

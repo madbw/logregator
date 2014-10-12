@@ -2,13 +2,16 @@ package com.century.logregator.dao;
 
 import com.century.logregator.model.JarInfo;
 import com.century.logregator.model.MvnTag;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JarInfoDao {
     @Autowired
+    @Setter
     private JdbcTemplate jdbcTemplate;
     @Autowired
+    @Setter
     private MvnTagDao mvnTagDao;
     String INSERT_JAR_INFO_SQL = "INSERT INTO jar_info(file_name, mvn_tag_id, application_id) VALUES (?, ?, ?) RETURNING id";
 

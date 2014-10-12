@@ -9,7 +9,6 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.integration.spring.SpringLiquibase;
 import liquibase.resource.FileSystemResourceAccessor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.IDatabaseTester;
@@ -69,7 +68,7 @@ public class TestConfig {
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("dbc:postgresql://localhost:5432/logregator_test");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/logregator_test");
         dataSource.setUsername("postgres");
         dataSource.setPassword("111111");
         dataSource.setMaxActive(50);
