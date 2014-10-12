@@ -72,6 +72,7 @@ public class TestConfig {
         dataSource.setUrl("dbc:postgresql://localhost:5432/logregator_test");
         dataSource.setUsername("postgres");
         dataSource.setPassword("111111");
+        dataSource.setMaxActive(50);
         Collection<String> sqls = new ArrayList<String>();
         sqls.add("set search_path TO logregator;");
         dataSource.setConnectionInitSqls(sqls);
