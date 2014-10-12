@@ -10,8 +10,12 @@ import java.util.*;
  */
 public class Application {
 
+    /**
+     * Primary key
+     */
     @Getter @Setter
-    private Long id;
+    private Integer id;
+
     /**
      * Application start time
      */
@@ -41,6 +45,12 @@ public class Application {
      */
     @Getter @Setter
     private Properties systemProps;
+
+    /**
+     * mvn tag of started application
+     */
+    @Getter @Setter
+    private MvnTag appTag;
 
     /**
      * Information about application dependencies

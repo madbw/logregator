@@ -13,7 +13,7 @@ public class MvnTag {
      * первичный ключ
      */
     @Getter @Setter
-    private Long id;
+    private Integer id;
 
     /**
      * groupId артефакра

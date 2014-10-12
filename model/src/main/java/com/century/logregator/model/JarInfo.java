@@ -9,7 +9,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class JarInfo {
     @Getter @Setter
-    private Long id;
+    private int id;
 
     @Getter @Setter
     private String fileName;
@@ -24,7 +24,7 @@ public class JarInfo {
     @Getter @Setter
     private MvnTag mvnTag;
 
-    public Long getMvnTagId(){
+    public Integer getMvnTagId(){
         if(mvnTag == null){
             return null;
         }
@@ -33,8 +33,8 @@ public class JarInfo {
     /**
      * Application, this jar file belongs to
      */
-    @Getter
-    Long applicationId;
+    @Getter @Setter
+    Integer applicationId;
 
     public JarInfo(String fileName, MvnTag mvnTag) {
         this.fileName = fileName;

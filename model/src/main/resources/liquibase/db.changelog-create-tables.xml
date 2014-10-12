@@ -33,36 +33,36 @@
     </changeSet>
 
     <changeSet id="create table stacktrace" author="ikopanev">
-        <createTable tableName="stacktrace" remarks="stacktrace выброшенной ошибки">
-            <column name="id" type="serial" autoIncrement="true" remarks="первичный ключ">
+        <createTable tableName="stacktrace" remarks="stacktrace of exception">
+            <column name="id" type="serial" autoIncrement="true" remarks="primary key">
                 <constraints nullable="false"
                              primaryKey="true"
                              unique="true"/>
             </column>
             <column name="level" type="integer"
-                    remarks="уровень вложенности Throwable. 0 - пойманный exception, 1 - Throwable.getCause() и т.д.">
+                    remarks="nesting level of Throwable. 0 - catched exception, 1 - Throwable.getCause() etc">
                 <constraints nullable="false"/>
             </column>
-            <column name="ord" type="integer" remarks="Порядковый номер StackTraceElement">
+            <column name="ord" type="integer" remarks="order number of StackTraceElement">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
     <changeSet id="create table mvn_tag" author="ikopanev">
-        <createTable tableName="mvn_tag" remarks="Информация о библиотеках, используемых в проекте">
-            <column name="id" type="serial" remarks="первичный ключ">
+        <createTable tableName="mvn_tag" remarks="Information about libraries, used in project">
+            <column name="id" type="serial" remarks="primary key">
                 <constraints nullable="false"
                              primaryKey="true"
                              unique="true"/>
             </column>
-            <column name="group_id" type="varchar" remarks="groupId maven артифакта">
+            <column name="group_id" type="varchar" remarks="groupId of maven artifact">
                 <constraints nullable="false"/>
             </column>
-            <column name="artifact_id" type="varchar" remarks="имя maven артифакта">
+            <column name="artifact_id" type="varchar" remarks="artifactId ">
                 <constraints nullable="false"/>
             </column>
-            <column name="version" type="varchar" remarks="версия артифакта maven">
+            <column name="version" type="varchar" remarks="version of maven artifact">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -70,55 +70,52 @@
 
     <changeSet id="4 : create table application" author="ikopanev">
         <createTable tableName="application"
-                     remarks="Информация о приложении, записываюется в лог один раз при записи приложения">
-            <column name="id" type="serial" remarks="первичный ключ">
+                     remarks="Information about application, logged once at start">
+            <column name="id" type="serial" remarks="primary key">
                 <constraints nullable="false"
                              primaryKey="true"
                              unique="true"/>
             </column>
-            <column name="mvn_tag_id" type="int" remarks="Mvn информация о запущенном приложении">
-                <constraints foreignKeyName="mvn_tag_id_fk" references="mvn_tag(id)"/>
-            </column>
+            <column name="mvn_tag_id" type="int" remarks="mvn information about application"/>
+            <column name="start_date" type="timestamp" remarks="application start time"/>
+            <column name="host_name" type="varchar" remarks="host where application works"/>
+            <column name="host_ip" type="varchar" remarks="ip of host"/>
         </createTable>
     </changeSet>
 
     <changeSet id="create table application_properties" author="ikopanev">
         <createTable tableName="application_properties"
-                     remarks="Настройки приложения полученные с помощью System.getProperties()">
-            <column name="id" type="serial" remarks="первичный ключ">
+                     remarks="system properties - System.getProperties()">
+            <column name="id" type="serial" remarks="primary key">
                 <constraints primaryKey="true"
                              nullable="false"
                              unique="true"/>
             </column>
-            <column name="key" type="varchar" remarks="ключ">
+            <column name="key" type="varchar" remarks="key">
                 <constraints nullable="false"/>
             </column>
-            <column name="value" type="varchar" remarks="значение">
+            <column name="value" type="varchar" remarks="value">
                 <constraints nullable="true"/>
             </column>
-            <column name="application_id" type="int" remarks="Приложение к которому относятся properties.внешний ключ таблицы application">
-                <constraints references="application(id)" foreignKeyName="application_id_fk"/>
-            </column>
+            <column name="application_id" type="int" remarks="application, this properties belongs to. Foreign key of table application"/>
         </createTable>
     </changeSet>
 
     <changeSet id="create table application_environment" author="ikopanev">
         <createTable tableName="application_environment"
-                     remarks="Окружение приложения, полученное с помощью System.getEnv()">
-            <column name="id" type="serial" remarks="Первичный ключ">
+                     remarks="application environment - System.getEnv()">
+            <column name="id" type="serial" remarks="primary key">
                 <constraints unique="true"
                              nullable="false"
                              primaryKey="true"/>
             </column>
-            <column name="key" type="varchar" remarks="ключ">
+            <column name="key" type="varchar" remarks="key">
                 <constraints nullable="false"/>
             </column>
-            <column name="value" type="varchar" remarks="значение">
+            <column name="value" type="varchar" remarks="value">
                 <constraints nullable="true"/>
             </column>
-            <column name="application_id" type="int" remarks="Приложение к которому относится окружение. внешний ключ таблицы application">
-                <constraints references="application(id)" foreignKeyName="application_id_fk"/>
-            </column>
+            <column name="application_id" type="int" remarks="Application, this environment belongs to.Foreign key of table application"/>
         </createTable>
     </changeSet>
 
@@ -128,12 +125,8 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="file_name" type="varchar" remarks="file name of jar dependency"/>
-            <column name="mvn_tag_id" type="integer" remarks="maven info, optional. Foreing key mvn_tag(id)">
-                <constraints references="mvn_tag(id)" foreignKeyName="mvn_tag_id_fk"/>
-            </column>
-            <column name="application_id" type="integer" remarks="application, this jar belongs to">
-                <!--<constraints references="application(id)" foreignKeyName="application_id_fk"/>-->
-            </column>
+            <column name="mvn_tag_id" type="integer" remarks="maven info, optional. Foreing key mvn_tag(id)"/>
+            <column name="application_id" type="integer" remarks="application, this jar belongs to"/>
         </createTable>
     </changeSet>
 
