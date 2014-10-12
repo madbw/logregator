@@ -38,7 +38,7 @@ public class ApplicationDaoTest extends DbUnitTest {
         properties.put("s3", "value3");
         application.setSystemProps(properties);
 
-        Map<String, String> environment = new HashMap<>();
+        Map<String, String> environment = new TreeMap<>();
         environment.put("env-key1", "env-val1");
         environment.put("env-key2", "env-val2");
         environment.put("env-key3", "env-val3");

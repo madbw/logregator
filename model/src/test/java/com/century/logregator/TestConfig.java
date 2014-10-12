@@ -46,6 +46,8 @@ public class TestConfig {
             System.out.println(e.toString());
             e.printStackTrace();
             System.exit(-5);
+        } finally {
+            c.close();
         }
     }
 

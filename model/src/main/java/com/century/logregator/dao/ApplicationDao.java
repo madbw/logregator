@@ -5,8 +5,7 @@ import com.century.logregator.model.JarInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Dao for saving application information
@@ -42,7 +41,8 @@ public class ApplicationDao {
     }
 
     private void saveProps(Application application) {
-        for (Map.Entry<Object, Object> entry : application.getSystemProps().entrySet()) {
+        Map<Object, Object> props = new TreeMap<>(application.getSystemProps());
+        for (Map.Entry<Object, Object> entry : props.entrySet()) {
             jdbcTemplate.update(INSERT_PROPS, entry.getKey(), entry.getValue(), application.getId());
         }
     }

@@ -12,6 +12,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class DbUnitTest {
         dataSet = readDataSet();
     }
 
+//    @AfterClass
     public static void closeConnection() throws Exception {
         databaseConnection.close();
     }
